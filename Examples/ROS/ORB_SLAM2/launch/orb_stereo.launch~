@@ -1,0 +1,12 @@
+<!-- -->
+<launch>
+	<arg name="bagfile" default="/home/nico/Documents/autoCarExpData/20160511/2016-05-11-16-18-29.bag"/>
+	<param name="/use_sim_time" value="true"/>
+	<node pkg="rosbag" type="play" name="rosbag" args="--clock $(arg bagfile)  ">
+                <remap from="/stereo/left/image_raw" to="/camera/left/image_raw"/>
+		<remap from="/stereo/right/image_raw" to="/camera/right/image_raw"/>
+        </node>
+	<node pkg="ORB_SLAM2" type="Stereo" name="Stereo_orb" args="$(find ORB_SLAM2)/../../../Vocabulary/ORBvoc.txt $(find ORB_SLAM2)/../../Stereo/ugv_pointgrey.yaml true" output="screen"/>
+        <node pkg="tf2_ros" type="static_transform_publisher" name="world_camera" args="0 0 0 -1.57079632679 0 -1.57079632679 world camera_link" />
+        <node pkg="rviz" type="rviz" name="camera_rviz" args="-d $(find ORB_SLAM2)/orb.rviz"/>
+</launch>

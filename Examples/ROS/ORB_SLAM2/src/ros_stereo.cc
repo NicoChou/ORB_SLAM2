@@ -23,14 +23,17 @@
 #include<algorithm>
 #include<fstream>
 #include<chrono>
-
-#include<ros/ros.h>
+#include<stdlib.h>
+#include <ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
-
-#include<opencv2/core/core.hpp>
+#include <nav_msgs/Path.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <nav_msgs/Path.h>
+#include <nav_msgs/Odometry.h>
+#include <opencv2/core/core.hpp>
 
 #include"../../../include/System.h"
 
@@ -42,17 +45,26 @@ public:
     ImageGrabber(ORB_SLAM2::System* pSLAM):mpSLAM(pSLAM){}
 
     void GrabStereo(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight);
-
+    void convertPoseFormat(const cv::Mat& t, const Eigen::Quaternion<double>& Q, geometry_msgs::Pose& pose);     //Nico
+    void matrixToQuaternion(const cv::Mat& mat, Eigen::Quaternion<double>& quat);//Nico
+    void grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight);
     ORB_SLAM2::System* mpSLAM;
     bool do_rectify;
     cv::Mat M1l,M2l,M1r,M2r;
+    cv::Mat T_pub;
+    cv::Mat Rwc_pub;
+    cv::Mat twc_pub;
+    Eigen::Quaternion<double> Q;
+    geometry_msgs::Pose pose_pub;
+    //nav_msgs::Path orbPath;
+    nav_msgs::Odometry orbOdom;
+    ros::Publisher orbPath_pub;
 };
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "RGBD");
+    ros::init(argc, argv, "Stereo");
     ros::start();
-
     if(argc != 4)
     {
         cerr << endl << "Usage: rosrun ORB_SLAM2 Stereo path_to_vocabulary path_to_settings do_rectify" << endl;
@@ -65,11 +77,10 @@ int main(int argc, char **argv)
 
     ImageGrabber igb(&SLAM);
 
-    stringstream ss(argv[3]);
-	ss >> boolalpha >> igb.do_rectify;
+    if(argv[3])
+    {
+        igb.do_rectify = true;
 
-    if(igb.do_rectify)
-    {      
         // Load settings related to stereo calibration
         cv::FileStorage fsSettings(argv[2], cv::FileStorage::READ);
         if(!fsSettings.isOpened())
@@ -108,21 +119,20 @@ int main(int argc, char **argv)
     }
 
     ros::NodeHandle nh;
-
+    igb.orbPath_pub = nh.advertise<nav_msgs::Odometry>("orbslam_path",100);
     message_filters::Subscriber<sensor_msgs::Image> left_sub(nh, "/camera/left/image_raw", 1);
-    message_filters::Subscriber<sensor_msgs::Image> right_sub(nh, "camera/right/image_raw", 1);
+    message_filters::Subscriber<sensor_msgs::Image> right_sub(nh, "/camera/right/image_raw", 1);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::Image> sync_pol;
     message_filters::Synchronizer<sync_pol> sync(sync_pol(10), left_sub,right_sub);
     sync.registerCallback(boost::bind(&ImageGrabber::GrabStereo,&igb,_1,_2));
-
     ros::spin();
 
     // Stop all threads
     SLAM.Shutdown();
 
     // Save camera trajectory
-    SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory_TUM_Format.txt");
-    SLAM.SaveTrajectoryTUM("FrameTrajectory_TUM_Format.txt");
+    //SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory_TUM_Format.txt");
+    //SLAM.SaveTrajectoryTUM("FrameTrajectory_TUM_Format.txt");
     SLAM.SaveTrajectoryKITTI("FrameTrajectory_KITTI_Format.txt");
 
     ros::shutdown();
@@ -160,13 +170,91 @@ void ImageGrabber::GrabStereo(const sensor_msgs::ImageConstPtr& msgLeft,const se
         cv::Mat imLeft, imRight;
         cv::remap(cv_ptrLeft->image,imLeft,M1l,M2l,cv::INTER_LINEAR);
         cv::remap(cv_ptrRight->image,imRight,M1r,M2r,cv::INTER_LINEAR);
-        mpSLAM->TrackStereo(imLeft,imRight,cv_ptrLeft->header.stamp.toSec());
+        T_pub=mpSLAM->TrackStereo(imLeft,imRight,cv_ptrLeft->header.stamp.toSec());
+        //std::cout<<"T_pub : "<<T_pub.rowRange(0,3).col(3)<<std::endl;
+        grabTandpub(msgLeft,msgRight);
     }
     else
     {
-        mpSLAM->TrackStereo(cv_ptrLeft->image,cv_ptrRight->image,cv_ptrLeft->header.stamp.toSec());
+        T_pub=mpSLAM->TrackStereo(cv_ptrLeft->image,cv_ptrRight->image,cv_ptrLeft->header.stamp.toSec());
+        grabTandpub(msgLeft,msgRight);
     }
 
 }
 
+void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight)
+{
+    //T_pub=mpSLAM->GetT();
+    Rwc_pub = T_pub.rowRange(0,3).colRange(0,3).t();
+    //std::cout<<"R_pub : "<<R_pub<<std::endl;
+    twc_pub = -Rwc_pub*T_pub.rowRange(0,3).col(3);
+    std::cout<<"twc_pub : "<<twc_pub<<std::endl;
+    //std::cout<<"t.at<double>(0):"<<t_pub.at<float>(0,0)<<" t.at<double>(1):"<<t_pub.at<float>(1,0)<<" t.at<double>(2):"<<t_pub.at<float>(2,0)<<std::endl;
+    matrixToQuaternion(Rwc_pub,Q);
+    //std::out<<"Q : "<<Q<<std::endl;
+    convertPoseFormat(twc_pub,Q,pose_pub);
+    orbOdom.header.seq = msgLeft->header.seq;
+    orbOdom.header.stamp = msgLeft->header.stamp;
+    orbOdom.header.frame_id = "camera_link";
+    orbOdom.child_frame_id = "camera_odom";
+    orbOdom.pose.pose = pose_pub;
+   // std::cout<<"orbOdom.time:"<<orbOdom.header.stamp<<"  pose_pub.position :"<< pose_pub.position<<std::endl;
+    orbPath_pub.publish(orbOdom);
+}
 
+void ImageGrabber::convertPoseFormat(const cv::Mat& t, const Eigen::Quaternion<double>& Q, geometry_msgs::Pose& pose) {
+
+    pose.position.x = t.at<float>(0,0);
+    pose.position.y = t.at<float>(1,0);
+    pose.position.z = t.at<float>(2,0);
+    pose.orientation.w = Q.w();
+    pose.orientation.x = Q.x();
+    pose.orientation.y = Q.y();
+    pose.orientation.z = Q.z();
+
+}
+
+void ImageGrabber::matrixToQuaternion(const cv::Mat& mat, Eigen::Quaternion<double>& quat) {
+    double m00 = mat.at<float>(0,0);
+    double m01 = mat.at<float>(0,1);
+    double m02 = mat.at<float>(0,2);
+    double m10 = mat.at<float>(1,0);
+    double m11 = mat.at<float>(1,1);
+    double m12 = mat.at<float>(1,2);
+    double m20 = mat.at<float>(2,0);
+    double m21 = mat.at<float>(2,1);
+    double m22 = mat.at<float>(2,2);
+    double qw, qx, qy, qz;
+    double tr1 = 1.0 + m00 - m11 - m22;
+    double tr2 = 1.0 - m00 + m11 - m22;
+    double tr3 = 1.0 - m00 - m11 + m22;
+    if ((tr1 > tr2) && (tr1 > tr3)) {
+    double S = sqrt(tr1) * 2.0; // S=4*qx
+     qw = (m21 - m12) / S;
+     qx = 0.25 * S;
+     qy = (m01 + m10) / S;
+     qz = (m02 + m20) / S;
+     } else if ((tr2 > tr1) && (tr2 > tr3)) {
+    double S = sqrt(tr2) * 2.0; // S=4*qy
+     qw = (m02 - m20) / S;
+     qx = (m01 + m10) / S;
+     qy = 0.25 * S;
+     qz = (m12 + m21) / S;
+     } else if ((tr3 > tr1) && (tr3 > tr2)) {
+     double S = sqrt(tr3) * 2.0; // S=4*qz
+     qw = (m10 - m01) / S;
+     qx = (m02 + m20) / S;
+     qy = (m12 + m21) / S;
+     qz = 0.25 * S;
+     } else {
+    qw = 1.0;
+    qx = 0.0;
+    qy = 0.0;
+    qz = 0.0;
+     }
+    quat.x() = qx;
+    quat.y() = qy;
+    quat.z() = qz;
+    quat.w() = qw;
+    quat.normalize();
+ }
