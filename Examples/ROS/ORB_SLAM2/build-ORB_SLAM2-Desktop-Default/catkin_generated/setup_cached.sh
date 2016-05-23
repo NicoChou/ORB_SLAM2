@@ -15,4 +15,4 @@ export PKG_CONFIG_PATH="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/R
 export PWD="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build-ORB_SLAM2-Desktop-Default"
 export PYTHONPATH="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build-ORB_SLAM2-Desktop-Default/devel/lib/python2.7/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build-ORB_SLAM2-Desktop-Default/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2:/home/nico/catkin_ws/ugv/src:/home/nico/catkin_ws/tum_ardrone/src:/home/nico/catkin_ws/laser_camera_calibration/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks"
+export ROS_PACKAGE_PATH="/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2:/home/nico/catkin_ws/ugv/src:/home/nico/catkin_ws/tum_ardrone/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks"

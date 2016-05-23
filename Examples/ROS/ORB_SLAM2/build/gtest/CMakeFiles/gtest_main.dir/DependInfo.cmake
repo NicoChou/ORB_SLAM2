@@ -22,8 +22,6 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/include"
-  "/opt/ros/indigo/include"
-  "/usr/include/opencv"
   "/usr/src/gtest/include"
   "/usr/src/gtest"
   )
