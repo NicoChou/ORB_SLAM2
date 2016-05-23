@@ -154,6 +154,7 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
     }
     }
 
+    mpTracker->Initial_Pose_ = this->Initial_Pose_;
     return mpTracker->GrabImageStereo(imLeft,imRight,timestamp);
 }
 
