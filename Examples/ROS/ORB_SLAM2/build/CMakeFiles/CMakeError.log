@@ -1,21 +1,21 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec4121807511/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec4121807511.dir/build.make CMakeFiles/cmTryCompileExec4121807511.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec1806021135/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1806021135.dir/build.make CMakeFiles/cmTryCompileExec1806021135.dir/build
 make[1]: Entering directory `/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec4121807511.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4121807511.dir/CheckSymbolExists.c.o   -c /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTryCompileExec4121807511
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4121807511.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec4121807511.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4121807511 -rdynamic 
-CMakeFiles/cmTryCompileExec4121807511.dir/CheckSymbolExists.c.o: In function `main':
+Building C object CMakeFiles/cmTryCompileExec1806021135.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1806021135.dir/CheckSymbolExists.c.o   -c /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1806021135
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1806021135.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1806021135.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1806021135 -rdynamic 
+CMakeFiles/cmTryCompileExec1806021135.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-make[1]: *** [cmTryCompileExec4121807511] Error 1
+make[1]: *** [cmTryCompileExec1806021135] Error 1
 make[1]: Leaving directory `/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-make: *** [cmTryCompileExec4121807511/fast] Error 2
+make: *** [cmTryCompileExec1806021135/fast] Error 2
 
 File /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
@@ -35,19 +35,19 @@ int main(int argc, char** argv)
 Determining if the function pthread_create exists in the pthreads failed with the following output:
 Change Dir: /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
 
-Run Build Command:/usr/bin/make "cmTryCompileExec1266452962/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec1266452962.dir/build.make CMakeFiles/cmTryCompileExec1266452962.dir/build
+Run Build Command:/usr/bin/make "cmTryCompileExec2281908630/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2281908630.dir/build.make CMakeFiles/cmTryCompileExec2281908630.dir/build
 make[1]: Entering directory `/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
 /usr/bin/cmake -E cmake_progress_report /home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1266452962.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1266452962.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec1266452962
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1266452962.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1266452962.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1266452962 -rdynamic -lpthreads 
+Building C object CMakeFiles/cmTryCompileExec2281908630.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2281908630.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2281908630
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2281908630.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2281908630.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2281908630 -rdynamic -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [cmTryCompileExec1266452962] Error 1
+make[1]: *** [cmTryCompileExec2281908630] Error 1
 make[1]: Leaving directory `/home/nico/Vision/SLAM/ORB_official/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-make: *** [cmTryCompileExec1266452962/fast] Error 2
+make: *** [cmTryCompileExec2281908630/fast] Error 2
 
 

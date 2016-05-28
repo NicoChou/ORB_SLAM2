@@ -39,7 +39,8 @@
 #include <tf/LinearMath/Matrix3x3.h>
 #include <tf/transform_datatypes.h>
 #include <tf/transform_broadcaster.h>
-#include"../../../include/System.h"
+#include "../../../include/System.h"
+#include "../../../include/Converter.h"
 #define DegToRad M_PI/180
 #define RadToDeg 180/M_PI
 #define GRAVITY 9.8035
@@ -56,6 +57,13 @@ public:
         init_gps_.latitude  = 0.0;
         init_gps_.longitude = 0.0;
         initial_inertial_flag_ = 0;
+        f.open("ros_stereo_pose.txt");
+        f<<fixed;
+//        tf::Matrix3x3 c2w(0,0,1,
+//                          -1,0,0,
+//                          0,-1,0);
+
+        c2w.setRPY(-M_PI/2,0,-M_PI/2);
     }
 
     void GrabStereo(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight);
@@ -98,6 +106,8 @@ public:
         float altitude;
     }init_gps_;
     int initial_inertial_flag_;
+    ofstream f;
+    tf:: Matrix3x3 c2w;
 };
 
 int main(int argc, char **argv)
@@ -176,7 +186,7 @@ int main(int argc, char **argv)
     //SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory_TUM_Format.txt");
     //SLAM.SaveTrajectoryTUM("FrameTrajectory_TUM_Format.txt");
     SLAM.SaveTrajectoryKITTI("FrameTrajectory_KITTI_Format.txt");
-
+    igb.f.close();
     ros::shutdown();
 
     return 0;
@@ -287,23 +297,27 @@ void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const s
     Rwc_pub = T_pub.rowRange(0,3).colRange(0,3).t();
     twc_pub = -Rwc_pub*T_pub.rowRange(0,3).col(3);
     std::cout <<"twc_pub: "<< twc_pub << std::endl;
+
     tf::Matrix3x3 M(Rwc_pub.at<float>(0,0),Rwc_pub.at<float>(0,1),Rwc_pub.at<float>(0,2),
                     Rwc_pub.at<float>(1,0),Rwc_pub.at<float>(1,1),Rwc_pub.at<float>(1,2),
                     Rwc_pub.at<float>(2,0),Rwc_pub.at<float>(2,1),Rwc_pub.at<float>(2,2));
+    M=c2w*M*c2w.transpose();
+    M.getRPY(vroll,vpitch,vyaw);
 
-    M.getEulerYPR(vyaw,vpitch,vroll);
-    std::cout<<"yaw_vel: "    << vyaw*180/M_PI        <<
-               "  pitch_vel: "<< vpitch*180/M_PI      <<
-               "  roll_vel: " << vroll*180/M_PI       <<  std::endl;
-
+    std::cout<<"roll: "    << vroll*RadToDeg       <<
+               "  pitch: "<< vpitch*RadToDeg     <<
+               "  yaw: " << vyaw*RadToDeg       <<  std::endl;
+    f << setprecision(9) << vroll*RadToDeg << " "<<vpitch*RadToDeg<<" "<<vyaw*RadToDeg <<" "<<twc_pub.at<float>(2)<<" "<<-twc_pub.at<float>(0)<<" "<<-twc_pub.at<float>(1)<<endl;
     tf_t_.setOrigin(tf::Vector3(inertialOdom_.pose.pose.position.x,inertialOdom_.pose.pose.position.y,0.0));
     tf_q_.setRPY(roll,pitch,yaw);
     tf_t_.setRotation(tf_q_);
     tf_broadcaster_.sendTransform(tf::StampedTransform(tf_t_,inertialOdom_.header.stamp,"/world","/vehicle"));
 
     tf_t_.setOrigin(tf::Vector3( twc_pub.at<float>(2), -twc_pub.at<float>(0),-twc_pub.at<float>(1)));
-    tf_q_.setRPY(-vyaw, vroll, vpitch);
+    //tf_q_.setRPY(-vyaw, vroll, vpitch);
+    tf_q_.setRPY( vroll,vpitch, vyaw);
     tf_t_.setRotation(tf_q_);
+    //tf_t_.setBasis(M);
     tf_broadcaster_.sendTransform(tf::StampedTransform(tf_t_, msgLeft->header.stamp, "/world", "/visual_odometry"));
 
 
@@ -414,4 +428,4 @@ void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const s
 
 //  return rotationMatrix;
 //}
-//this is a test for git
+
