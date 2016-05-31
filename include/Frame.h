@@ -66,6 +66,9 @@ public:
     // Set the camera pose.
     void SetPose(cv::Mat Tcw);
 
+    //Set the imu pose
+    void SetPoseImu(cv::Mat Tcw_imu);
+
     // Computes rotation, translation and camera center matrices from the camera pose.
     void UpdatePoseMatrices();
 
@@ -162,6 +165,9 @@ public:
 
     // Camera pose.
     cv::Mat mTcw;
+
+    //imu pose from inertial Nico
+    cv::Mat mTcw_imu;
 
     // Current and Next Frame id.
     static long unsigned int nNextId;

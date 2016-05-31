@@ -197,7 +197,8 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
     }
 
     mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
-
+    if(!this->mTcw_imu.empty())
+        mCurrentFrame.mTcw_imu = this->mTcw_imu.clone();
     Track();
 
     return mCurrentFrame.mTcw.clone();
@@ -421,12 +422,21 @@ void Tracking::Track()
         if(bOK)
         {
             // Nico TODO:use IMU Update motion model
-            if(!mLastFrame.mTcw.empty())
+            if(!mLastFrame.mTcw_imu.empty())
             {
                 cv::Mat LastTwc = cv::Mat::eye(4,4,CV_32F);
-                mLastFrame.GetRotationInverse().copyTo(LastTwc.rowRange(0,3).colRange(0,3));
-                mLastFrame.GetCameraCenter().copyTo(LastTwc.rowRange(0,3).col(3));
-                mVelocity = mCurrentFrame.mTcw*LastTwc;
+                //mLastFrame.GetRotationInverse().copyTo(LastTwc.rowRange(0,3).colRange(0,3));
+                //mLastFrame.GetCameraCenter().copyTo(LastTwc.rowRange(0,3).col(3));
+                //mVelocity = mCurrentFrame.mTcw*LastTwc;
+
+                //use IMU to update motion model Nico
+                cv::Mat R =cv::Mat::eye(3,3,CV_32F);
+                cv::Mat t = cv::Mat::zeros(3,1,CV_32F);
+                R = mLastFrame.mTcw_imu.rowRange(0,3).colRange(0,3).t();
+                R.copyTo(LastTwc.rowRange(0,3).colRange(0,3));
+                t = -R*mLastFrame.mTcw_imu.rowRange(0,3).col(3);
+                t.copyTo(LastTwc.rowRange(0,3).col(3));
+                mVelocity = mCurrentFrame.mTcw_imu*LastTwc;
             }
             else
                 mVelocity = cv::Mat();

@@ -55,6 +55,8 @@ Frame::Frame(const Frame &frame)
 
     if(!frame.mTcw.empty())
         SetPose(frame.mTcw);
+    if(!frame.mTcw_imu.empty())
+        mTcw_imu = frame.mTcw_imu.clone();
 }
 
 
@@ -256,6 +258,11 @@ void Frame::SetPose(cv::Mat Tcw)
 {
     mTcw = Tcw.clone();
     UpdatePoseMatrices();
+}
+
+void Frame::SetPoseImu(cv::Mat Tcw_imu)
+{
+    mTcw_imu = Tcw_imu.clone();
 }
 
 void Frame::UpdatePoseMatrices()

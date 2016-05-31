@@ -331,8 +331,6 @@ BLAS_mkl_intel_lp64_LIBRARY-ADVANCED:INTERNAL=1
 BLAS_scsl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: BLAS_sgemm_LIBRARY
 BLAS_sgemm_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: BLAS_sgemm__blas_f2c_WORKS
-BLAS_sgemm__blas_f2c_WORKS-ADVANCED:INTERNAL=1
 //Have function sgemm_
 BLAS_sgemm__blas_f2c_WORKS:INTERNAL=1
 //ADVANCED property for variable: BLAS_sunperf_LIBRARY
@@ -476,8 +474,6 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[-fopenmp][-fopenmp][v()]
 LAPACK_Accelerate_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: LAPACK_acml_LIBRARY
 LAPACK_acml_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: LAPACK_cheev__lapack_f2c_WORKS
-LAPACK_cheev__lapack_f2c_WORKS-ADVANCED:INTERNAL=1
 //Have function cheev_
 LAPACK_cheev__lapack_f2c_WORKS:INTERNAL=1
 //ADVANCED property for variable: LAPACK_lapack_LIBRARY

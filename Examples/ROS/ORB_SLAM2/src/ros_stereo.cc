@@ -64,13 +64,13 @@ public:
 //                          0,-1,0);
 
         c2w.setRPY(-M_PI/2,0,-M_PI/2);
+        mTcw_imu = cv::Mat::eye(4,4,CV_32F);
+        mRcw_imu = cv::Mat::eye(3,3,CV_32F);
+        mtcw_imu = cv::Mat::zeros(3,1,CV_32F);
     }
 
     void GrabStereo(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight);
     void grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight);
-    //void convertPoseFormat(const cv::Mat& t, const Eigen::Quaternion<double>& Q, geometry_msgs::Pose& pose);     //Nico
-    //void matrixToQuaternion(const cv::Mat& mat, Eigen::Quaternion<double>& quat);//Nico
-    //cv::Mat euler2rot(const cv::Mat & euler);
     ORB_SLAM2::System* mpSLAM;
     bool do_rectify;
     cv::Mat M1l,M2l,M1r,M2r;
@@ -107,7 +107,12 @@ public:
     }init_gps_;
     int initial_inertial_flag_;
     ofstream f;
-    tf:: Matrix3x3 c2w;
+    tf::Matrix3x3 c2w;
+    // add imu motion model to vo Nico
+    cv::Mat mTcw_imu;
+    cv::Mat mRcw_imu;
+    cv::Mat mtcw_imu;
+    tf::Matrix3x3 mtfR;
 };
 
 int main(int argc, char **argv)
@@ -195,10 +200,10 @@ int main(int argc, char **argv)
 void ImageGrabber::dataCallback(const ugv_msgs::NCOMConstPtr &msg)
 {
 
-    //TODO change the rpy direction
     roll = msg->roll*DegToRad;
     pitch = -msg->pitch*DegToRad;
     yaw = -msg->heading*DegToRad;
+
     qFromeuler = tf::createQuaternionMsgFromRollPitchYaw(roll,pitch,yaw);
     inertialOdom_.header.frame_id = "world";
     inertialOdom_.header.stamp = msg->header.stamp;
@@ -217,10 +222,6 @@ void ImageGrabber::dataCallback(const ugv_msgs::NCOMConstPtr &msg)
         inertialOdom_.pose.pose.position.x = 0;
         inertialOdom_.pose.pose.position.y = 0;
         inertialOdom_.pose.pose.position.z = 0;
-//        inertialOdom_.pose.pose.orientation.x =0;
-//        inertialOdom_.pose.pose.orientation.y =0;
-//        inertialOdom_.pose.pose.orientation.z =0;
-//        inertialOdom_.pose.pose.orientation.w =1;
         tfInertialRotation_.setRPY(pitch,yaw,-roll);
         Initial_Pose_ = cv::Mat::eye(4,4,CV_32F);
         for(int i=0;i<3;i++)
@@ -233,9 +234,17 @@ void ImageGrabber::dataCallback(const ugv_msgs::NCOMConstPtr &msg)
         inertialOdom_.pose.pose.position.y =  -(msg->longitude - init_gps_.longitude) * DegToRad * EARTH_R * cos(msg->latitude * DegToRad);
         inertialOdom_.pose.pose.position.z =  (msg->altitude  - init_gps_.altitude );
     }
-
-
-
+    mtfR.setRPY(roll,pitch,yaw);
+    mtfR = c2w.transpose()*mtfR*c2w;
+    mRcw_imu = ORB_SLAM2::Converter::toCvMat(mtfR);
+    mRcw_imu = mRcw_imu.t();
+    mRcw_imu.copyTo(mTcw_imu.rowRange(0,3).colRange(0,3));
+    mtcw_imu.at<float>(0,0) = (float)(-inertialOdom_.pose.pose.position.y);
+    mtcw_imu.at<float>(1,0) = (float)(-inertialOdom_.pose.pose.position.z);
+    mtcw_imu.at<float>(2,0) = (float)(inertialOdom_.pose.pose.position.x);
+    mtcw_imu = -mRcw_imu*mtcw_imu;
+    mtcw_imu.copyTo(mTcw_imu.rowRange(0,3).col(3));
+    mpSLAM->mTcw_imu = mTcw_imu;
 }
 
 void ImageGrabber::GrabStereo(const sensor_msgs::ImageConstPtr& msgLeft,const sensor_msgs::ImageConstPtr& msgRight)
@@ -296,17 +305,23 @@ void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const s
     static tfScalar vroll,vpitch,vyaw;
     Rwc_pub = T_pub.rowRange(0,3).colRange(0,3).t();
     twc_pub = -Rwc_pub*T_pub.rowRange(0,3).col(3);
-    std::cout <<"twc_pub: "<< twc_pub << std::endl;
+    //std::cout <<"twc_pub: "<< twc_pub << std::endl;
+    std::cout <<"R_vo: "<<  Rwc_pub << std::endl;
+    std::cout <<"R_ins: "<< mRcw_imu << std::endl;
+    std::cout <<"t_vo: "<< T_pub.rowRange(0,3).col(3) << std::endl;
+    std::cout <<"t_ins: "<< mtcw_imu<< std::endl;
 
+
+    //std::cout <<"inertialOdom_.pose.pose.position: "<<inertialOdom_.pose.pose.position.x<<' '<<inertialOdom_.pose.pose.position.y<< ' '<<inertialOdom_.pose.pose.position.z<<endl;
     tf::Matrix3x3 M(Rwc_pub.at<float>(0,0),Rwc_pub.at<float>(0,1),Rwc_pub.at<float>(0,2),
                     Rwc_pub.at<float>(1,0),Rwc_pub.at<float>(1,1),Rwc_pub.at<float>(1,2),
                     Rwc_pub.at<float>(2,0),Rwc_pub.at<float>(2,1),Rwc_pub.at<float>(2,2));
     M=c2w*M*c2w.transpose();
     M.getRPY(vroll,vpitch,vyaw);
 
-    std::cout<<"roll: "    << vroll*RadToDeg       <<
-               "  pitch: "<< vpitch*RadToDeg     <<
-               "  yaw: " << vyaw*RadToDeg       <<  std::endl;
+//    std::cout<<"roll: "    << vroll*RadToDeg       <<
+//               "  pitch: "<< vpitch*RadToDeg     <<
+//               "  yaw: " << vyaw*RadToDeg       <<  std::endl;
     f << setprecision(9) << vroll*RadToDeg << " "<<vpitch*RadToDeg<<" "<<vyaw*RadToDeg <<" "<<twc_pub.at<float>(2)<<" "<<-twc_pub.at<float>(0)<<" "<<-twc_pub.at<float>(1)<<endl;
     tf_t_.setOrigin(tf::Vector3(inertialOdom_.pose.pose.position.x,inertialOdom_.pose.pose.position.y,0.0));
     tf_q_.setRPY(roll,pitch,yaw);
@@ -315,9 +330,9 @@ void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const s
 
     tf_t_.setOrigin(tf::Vector3( twc_pub.at<float>(2), -twc_pub.at<float>(0),-twc_pub.at<float>(1)));
     //tf_q_.setRPY(-vyaw, vroll, vpitch);
-    tf_q_.setRPY( vroll,vpitch, vyaw);
-    tf_t_.setRotation(tf_q_);
-    //tf_t_.setBasis(M);
+    //tf_q_.setRPY( vroll,vpitch, vyaw);
+    //tf_t_.setRotation(tf_q_);
+    tf_t_.setBasis(M);
     tf_broadcaster_.sendTransform(tf::StampedTransform(tf_t_, msgLeft->header.stamp, "/world", "/visual_odometry"));
 
 
@@ -330,102 +345,4 @@ void ImageGrabber::grabTandpub(const sensor_msgs::ImageConstPtr& msgLeft,const s
     inertialPath_pub_.publish(inertialOdom_);
 }
 
-//void ImageGrabber::convertPoseFormat(const cv::Mat& t, const Eigen::Quaternion<double>& Q, geometry_msgs::Pose& pose) {
-
-//    pose.position.x = t.at<float>(0,0);
-//    pose.position.y = t.at<float>(1,0);
-//    pose.position.z = t.at<float>(2,0);
-//    pose.orientation.w = Q.w();
-//    pose.orientation.x = Q.x();
-//    pose.orientation.y = Q.y();
-//    pose.orientation.z = Q.z();
-
-//}
-
-//void ImageGrabber::matrixToQuaternion(const cv::Mat& mat, Eigen::Quaternion<double>& quat) {
-//    double m00 = mat.at<float>(0,0);
-//    double m01 = mat.at<float>(0,1);
-//    double m02 = mat.at<float>(0,2);
-//    double m10 = mat.at<float>(1,0);
-//    double m11 = mat.at<float>(1,1);
-//    double m12 = mat.at<float>(1,2);
-//    double m20 = mat.at<float>(2,0);
-//    double m21 = mat.at<float>(2,1);
-//    double m22 = mat.at<float>(2,2);
-//    double qw, qx, qy, qz;
-//    double tr1 = 1.0 + m00 - m11 - m22;
-//    double tr2 = 1.0 - m00 + m11 - m22;
-//    double tr3 = 1.0 - m00 - m11 + m22;
-//    if ((tr1 > tr2) && (tr1 > tr3)) {
-//    double S = sqrt(tr1) * 2.0; // S=4*qx
-//     qw = (m21 - m12) / S;
-//     qx = 0.25 * S;
-//     qy = (m01 + m10) / S;
-//     qz = (m02 + m20) / S;
-//     } else if ((tr2 > tr1) && (tr2 > tr3)) {
-//    double S = sqrt(tr2) * 2.0; // S=4*qy
-//     qw = (m02 - m20) / S;
-//     qx = (m01 + m10) / S;
-//     qy = 0.25 * S;
-//     qz = (m12 + m21) / S;
-//     } else if ((tr3 > tr1) && (tr3 > tr2)) {
-//     double S = sqrt(tr3) * 2.0; // S=4*qz
-//     qw = (m10 - m01) / S;
-//     qx = (m02 + m20) / S;
-//     qy = (m12 + m21) / S;
-//     qz = 0.25 * S;
-//     } else {
-//    qw = 1.0;
-//    qx = 0.0;
-//    qy = 0.0;
-//    qz = 0.0;
-//     }
-//    quat.x() = qx;
-//    quat.y() = qy;
-//    quat.z() = qz;
-//    quat.w() = qw;
-//    quat.normalize();
-
-// }
-//// Converts a given Euler angles to Rotation Matrix
-//cv::Mat ImageGrabber::euler2rot(const cv::Mat & euler)
-//{
-//  cv::Mat rotationMatrix(3,3,CV_64F);
-
-//  double x = euler.at<double>(0);
-//  double y = euler.at<double>(1);
-//  double z = euler.at<double>(2);
-
-//  // Assuming the angles are in radians.
-//  double ch = cos(z);
-//  double sh = sin(z);
-//  double ca = cos(y);
-//  double sa = sin(y);
-//  double cb = cos(x);
-//  double sb = sin(x);
-
-//  double m00, m01, m02, m10, m11, m12, m20, m21, m22;
-
-//  m00 = ch * ca;
-//  m01 = sh*sb - ch*sa*cb;
-//  m02 = ch*sa*sb + sh*cb;
-//  m10 = sa;
-//  m11 = ca*cb;
-//  m12 = -ca*sb;
-//  m20 = -sh*ca;
-//  m21 = sh*sa*cb + ch*sb;
-//  m22 = -sh*sa*sb + ch*cb;
-
-//  rotationMatrix.at<double>(0,0) = m00;
-//  rotationMatrix.at<double>(0,1) = m01;
-//  rotationMatrix.at<double>(0,2) = m02;
-//  rotationMatrix.at<double>(1,0) = m10;
-//  rotationMatrix.at<double>(1,1) = m11;
-//  rotationMatrix.at<double>(1,2) = m12;
-//  rotationMatrix.at<double>(2,0) = m20;
-//  rotationMatrix.at<double>(2,1) = m21;
-//  rotationMatrix.at<double>(2,2) = m22;
-
-//  return rotationMatrix;
-//}
 

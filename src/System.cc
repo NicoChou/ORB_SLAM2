@@ -155,6 +155,8 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
     }
 
     mpTracker->Initial_Pose_ = this->Initial_Pose_;
+    if(!this->mTcw_imu.empty())
+    this->mTcw_imu.copyTo(mpTracker->mTcw_imu);
     return mpTracker->GrabImageStereo(imLeft,imRight,timestamp);
 }
 
@@ -279,7 +281,7 @@ void System::Shutdown()
         usleep(5000);
     }
 
-    pangolin::BindToContext("ORB-SLAM2: Map Viewer");
+    pangolin::BindToContext("Map Viewer");
 }
 
 void System::SaveTrajectoryTUM(const string &filename)

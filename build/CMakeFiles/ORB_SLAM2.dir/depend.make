@@ -27,6 +27,12 @@ CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: ../Thirdparty/g2o/g2o/types/types_s
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: ../Thirdparty/g2o/g2o/types/types_six_dof_expmap.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: ../include/Converter.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: ../src/Converter.cc
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -151,7 +157,6 @@ CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/Converter.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -274,6 +279,12 @@ CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: ../include/ORBVocabulary.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: ../include/ORBextractor.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: ../include/ORBmatcher.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: ../src/Frame.cc
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -398,7 +409,6 @@ CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Sup
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/Frame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -1137,6 +1147,12 @@ CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: ../include/ORBVocabulary.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: ../include/ORBextractor.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: ../include/ORBmatcher.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: ../src/KeyFrame.cc
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -1261,7 +1277,6 @@ CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/KeyFrame.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -1772,6 +1787,12 @@ CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /home/nico/cmake_ws/Pangolin/incl
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/var/varwrapper.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video_output.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -1897,7 +1918,6 @@ CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eig
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/LoopClosing.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -2430,6 +2450,12 @@ CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /home/nico/cmake_ws/Pangolin/includ
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/var/varwrapper.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video_output.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -2563,7 +2589,6 @@ CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/Optimizer.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -2835,6 +2860,12 @@ CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /home/nico/cmake_ws/Pangolin/include/p
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/var/varwrapper.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video_output.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -2960,7 +2991,6 @@ CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Su
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/System.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h
@@ -3146,6 +3176,12 @@ CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /home/nico/cmake_ws/Pangolin/include
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/var/varwrapper.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /home/nico/cmake_ws/Pangolin/include/pangolin/video/video_output.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/Cholesky
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/Core
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/Dense
@@ -3271,7 +3307,6 @@ CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
-CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Quaternion.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/RotationBase.h
 CMakeFiles/ORB_SLAM2.dir/src/Tracking.cc.o: /usr/include/eigen3/Eigen/src/Eigen2Support/Geometry/Scaling.h

@@ -57,6 +57,8 @@ public:
     };
     // Initial position
     cv::Mat Initial_Pose_;
+    //IMU pose
+    cv::Mat mTcw_imu;
 
 public:
 
