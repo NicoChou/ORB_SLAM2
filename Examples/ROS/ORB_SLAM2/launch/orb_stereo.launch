@@ -5,7 +5,7 @@
 	<!--node pkg="tf2_ros" type="static_transform_publisher" name="world_baselink" args="0 0 0 0 0 0 world base_link" />
         <node pkg="tf2_ros" type="static_transform_publisher" name="baselink_camera" args="0 0 0 -1.57079632679 0 -1.57079632679 base_link camera_link" /-->
         <node pkg="rviz" type="rviz" name="camera_rviz" args="-d $(find ORB_SLAM2)/orb.rviz"/>
-	 <arg name="bagfile" default="/home/nico/Documents/autoCarExpData/20160519/2016-05-19-16-06-09.bag"/>
+	 <arg name="bagfile" default="/home/nico/Documents/autoCarExpData/20160519/2016-05-19-16-03-32.bag "/>
 	<param name="/use_sim_time" value="true"/>
 	<node pkg="rosbag" type="play" name="rosbag" args="--clock $(arg bagfile)  "/>
               <!-- remap from="/stereo/left/image_raw" to="/camera/left/image_raw"/>
