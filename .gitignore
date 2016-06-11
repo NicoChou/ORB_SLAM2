@@ -1,0 +1,7 @@
+build/
+build-ORB_SLAM2-Desktop-Default/
+Examples/ROS/ORB_SLAM2/build/
+Examples/ROS/ORB_SLAM2/build-ORB_SLAM2-Desktop-Default/
+FrameTrajectory_KITTI_Format.txt
+FrameTrajectory_TUM_Format.txt
+KeyFrameTrajectory_TUM_Format.txt
